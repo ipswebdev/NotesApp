@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Notes-App"
+    }
+  },
+  "defaultProject": "Notes-App",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,0 +1,14 @@
+ 
+<div class="wrapper">
+    <div class="note-card note-card--default" (click)="toEdit(i)" *ngFor="let note of notesArr;let i=index">
+        <div class="heading">
+            {{note.title}}
+        </div>
+        <div class="body">
+            {{note.description}}
+        </div> 
+    </div>
+</div>
+<div>
+
+<!-- <app-notes-item></app-notes-item> -->

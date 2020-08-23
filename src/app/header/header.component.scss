@@ -1,0 +1,14 @@
+div{
+    min-height: 3.25rem;
+    background: rgba($color: #000000, $alpha:0.2) ;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid black;
+}
+button{
+    outline : none;
+    background-color:grey;
+    border: black;
+    padding: 6px 12px;
+    border-radius : 0.25rem;
+    margin-right: 10px;
+}

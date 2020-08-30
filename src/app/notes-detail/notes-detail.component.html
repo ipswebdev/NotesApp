@@ -1,6 +1,6 @@
 
     <p>{{successMessage}}</p>
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <form (ngSubmit)="onSubmit()" [formGroup]="noteForm">
     <h4>Edit Note</h4>
     <div>
     <label for="title">
@@ -17,13 +17,14 @@
     formControlName="description">
     </div>
     <label for="isImp">
-    <input type="checkbox" [(ngModel)]="isImp" [ngModelOptions]="{standalone: true}">
+    <input type="checkbox"
+    formControlName="isImportant">
     Important Note
     </label>
-    <button type="submit" *ngIf="noteMode === 'edit'" [disabled]="!form.valid">
+    <button type="submit">
         Edit Note
     </button>
-    <button type="submit" *ngIf="noteMode === 'create'" [disabled]="!form.valid">
+    <button type="submit">
         Create Note
     </button>
     </form>

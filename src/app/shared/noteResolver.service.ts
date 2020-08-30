@@ -10,15 +10,18 @@ import { NoteStorage } from './note-storage.service';
         providedIn : 'root'
     }
 )
-export class NotesResolver implements Resolve<Notes>{
+export class NotesResolver implements Resolve<Notes[]>{
     constructor(private notesService : NotesService){}
-    resolve(route: ActivatedRouteSnapshot,state : RouterStateSnapshot): Observable<Notes> | Promise<Notes> | Notes {
-        this.notesService.notes.length = 0;
+    resolve(route: ActivatedRouteSnapshot,state : RouterStateSnapshot): Observable<Notes[]> | Promise<Notes[]> | Notes[] {
+        // this.notesService.notes.length = 0;
         this.notesService.fetchAllNotes();
-        console.log('checking nots from resolver service',this.notesService.notes);
-        console.log('resolve function ran getting the id as',route.params['id']);
-        console.log('resolve function ran giving individual note  as',this.notesService.notes);
+        // console.log('checking nots from resolver service',this.notesService.notes);
+        // console.log('resolve function ran getting the id as',route.params['id']);
+        // let id = +route.params['id'];
+        // console.log(id);
+        // console.log('resolve function ran giving individual note  as',this.notesService.notes);
         // return this.notesService.getNote(+route.params['id']);
-        return {title : 'this sis title', description : 'this is description'};
+        // return this.notesService.getSingleNote(+route.params['id']);
+        return this.notesService.getNotes();
     }
 }

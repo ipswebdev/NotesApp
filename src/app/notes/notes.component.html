@@ -7,8 +7,10 @@
         <div class="body">
             {{note.description}}
         </div> 
+        <span *ngIf="note.isImportant">Important Note</span>    
     </div>
 </div>
 <div>
+<button (click)="getNote()">Get Note Trial</button>    
 
 <!-- <app-notes-item></app-notes-item> -->

@@ -24,11 +24,19 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.notesService.notes.length = 0;
     this.notesService.fetchAllNotes();
     this.isNoteEdited = false;
-    this.notesArr = this.notesService.getNotes();
-    console.log('notesArr value',this.notesArr);
-    console.log('notes value in service',this.notesService.notes);
-    let notesCollection = this.notesService.getNotes();
-    console.log('notesXollectn',notesCollection);
+    this.notesService.notesFetched.subscribe(
+      (response)=>{
+        if(response === 1){
+          this.notesArr = this.notesService.getNotes();
+        }
+      }
+    );
+   
+  }
+
+  getNote(){
+    console.log(this.notesService.getSingleNote(1));
+
   }
  
   setterSubscription : Subscription;
@@ -37,11 +45,9 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.newNote = note; 
     console.log('new Note : ',note);
     console.log('new Note : ',this.newNote);
-    this.notesService.addNewNote(this.newNote);
   }
   toEdit(index){
     this.router.navigate(['notes-detail',index,'edit']);
-    console.log('navigate fn');
   }
   ngOnDestroy(){}
 }

@@ -14,14 +14,15 @@ import { map } from 'rxjs/operators';
 
 export class NotesService{
     constructor(private notesStorage : NoteStorage){}
-    public notes : Notes[]=[
-        // new Notes('Test Note','test Desc.',true),
-        // new Notes('Test Note 2','test Desc.2',false),
-        // new Notes('Test Note 3','test Desc.3',true),
+    notes : Notes[]=[
+        // new Notes('1','Test Note','test Desc.',true),
+        // new Notes('1','Test Note 2','test Desc.2',false),
+        // new Notes('1','Test Note 3','test Desc.3',true),
     ];
     // note : Notes;
-    notesSetter = new Subject<Notes[]>();
+    notesFetched = new Subject<number>();
     noteChanged = new Subject<any>(); 
+
     fetchAllNotes(){
         this.notesStorage.fetchNotes()
         .pipe(map(
@@ -41,23 +42,23 @@ export class NotesService{
         ))
         .subscribe(
             (response) => {
-                for (let i=0;i<response.length;i++) {
-                    this.notes.push(response[i]);
-                }
+                // for (let i=0;i<response.length;i++) {
+                //     this.notes.push(response[i]);
+                // }
+                this.notes = response;
+                this.notesFetched.next(1);
             console.log('notes are',this.notes);
             }
         );
     }
     getNotes(){
-        console.log('get nootes function value',this.notes);
+        // console.log('get nootes function value',this.notes);
         return this.notes;
     }
     getSingleNote(index): Notes{
-        index =3;
         console.log('getSingleNote ran for index',index);
         console.log('getSingleNote O/P',this.notes[index]);
         return this.notes[index];
-
     }
     addNewNote(noteReceived : Notes){
         this.notesStorage.addNote(noteReceived)
@@ -83,14 +84,14 @@ export class NotesService{
     }
 
     onUpdateNote(id:number,note){
-        //console.log('ran update fn');
+        // console.log('ran update fn');
         this.notes[id]=note;
         //console.log('array is',this.notes.slice());
         //console.log('------');
         this.noteChanged.next(true);
         this.notesStorage.update(note).subscribe(
             (response) =>{
-                //console.log('respponse of patch',response);
+                console.log('respponse of patch',response);
             }
         );
     }

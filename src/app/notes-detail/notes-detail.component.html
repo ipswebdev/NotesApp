@@ -1,5 +1,5 @@
 
-<p *ngIf="expression">{{successMessage}}</p>
+<p *ngIf="successNotification">{{successMessage}}</p>
 <div *ngIf="noteForm">
 <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
    <div>

@@ -42,22 +42,15 @@ export class NotesService{
         ))
         .subscribe(
             (response) => {
-                // for (let i=0;i<response.length;i++) {
-                //     this.notes.push(response[i]);
-                // }
                 this.notes = response;
                 this.notesFetched.next(1);
-            // console.log('notes are',this.notes);
             }
         );
     }
     getNotes(){
-        // console.log('get nootes function value',this.notes);
         return this.notes;
     }
     getSingleNote(index): Notes{
-        // console.log('getSingleNote ran for index',index);
-        // console.log('getSingleNote O/P',this.notes[index]);
         return this.notes[index];
     }
     addNewNote(noteReceived : Notes){
@@ -72,7 +65,6 @@ export class NotesService{
             }
         ))
         .subscribe((response)=>{
-            //console.log('respons we get is',response);
             this.notes.push({
                 id : response,
                 title : noteReceived.title,
@@ -84,10 +76,7 @@ export class NotesService{
     }
 
     onUpdateNote(id:number,note){
-        // console.log('ran update fn');
         this.notes[id]=note;
-        //console.log('array is',this.notes.slice());
-        //console.log('------');
         this.noteChanged.next(true);
         this.notesStorage.update(note).subscribe(
             (response) =>{

@@ -19,10 +19,12 @@ export class NotesDetailComponent implements OnInit {
   noteForm : FormGroup;
   noteMode : string;
   successMessage : string;
+  successNotification : boolean;
 
   constructor(private route : ActivatedRoute, private notesService : NotesService,private resolver : NotesResolver) { }
 
   ngOnInit(): void {
+    this.successNotification = false;
     console.log('oninit started');
     this.route.data.subscribe(
       (data : Data)=>{
@@ -44,20 +46,14 @@ export class NotesDetailComponent implements OnInit {
         this.noteMode = params['mode'];
       }
     );
-    console.log('fetch params executed');
     this.formInit(); 
   }
 
   formInit(){
-    console.log('id is',this.id);
-    console.log('mode is',this.noteMode);
     if(this.noteMode === 'edit' && this.id !== -1){
-      console.log('notemode :',this.noteMode);
-      console.log('id via route :',this.id);
       this.updateNote();
     }
     if(this.noteMode === 'create' && this.id === -1){
-      console.log('notemode :',this.noteMode);
       this.note = {
         title : '',
         description : '',
@@ -69,29 +65,27 @@ export class NotesDetailComponent implements OnInit {
   }
 
   setNewNote(note){
-    console.log('beginning exec for set new note with note as',note);
+    
     this.noteForm  = new FormGroup({
       'title' : new FormControl(note.title,Validators.required),
       'description' : new FormControl(note.description,Validators.required),
       'isImportant' : new FormControl(note.isImportant)
-    });
-    console.log('set note executed');
+    });    
+    this.successNotification = false;
   }
 
   updateNote(){
+    
     this.note = this.notesService.notes[this.id];
-    console.log('note to be updated is ',this.note);
     this.noteForm  = new FormGroup({
       'title' : new FormControl(this.note.title,Validators.required),
       'description' : new FormControl(this.note.description,Validators.required),
       'isImportant' : new FormControl(this.note.isImportant)
     });
-    console.log('update note executed');
+    this.successNotification = false;
   }
 
   onSubmit(){
-    console.log('submitted');
-    console.log('is note important value',this.noteForm.value);
   
     if(this.noteMode === 'edit'){
       this.note.title = this.noteForm.value.title; 
@@ -109,5 +103,6 @@ export class NotesDetailComponent implements OnInit {
       this.successMessage = 'you have successfully created an new note';
     }
     this.noteForm.reset();
+    this.successNotification = true;
   }
 }

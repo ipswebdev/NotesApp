@@ -23,6 +23,7 @@ export class NotesDetailComponent implements OnInit {
   constructor(private route : ActivatedRoute, private notesService : NotesService,private resolver : NotesResolver) { }
 
   ngOnInit(): void {
+    console.log('oninit started');
     this.route.data.subscribe(
       (data : Data)=>{
         this.notesArr=data.NotesEdit;
@@ -30,11 +31,12 @@ export class NotesDetailComponent implements OnInit {
       this.notesService.notesFetched.subscribe(
         (response)=>{
           if(response === 1){
-            this.fetchParams();        
+            this.fetchParams();       
           }
         }
-      );
+      );      
   }
+
   fetchParams(){
     this.route.params.subscribe(
       (params : Params) => {
@@ -42,50 +44,59 @@ export class NotesDetailComponent implements OnInit {
         this.noteMode = params['mode'];
       }
     );
-    this.onformInit();
+    console.log('fetch params executed');
+    this.formInit(); 
   }
-  onformInit(){
-    console.log('OnFormInit called');
+
+  formInit(){
     console.log('id is',this.id);
     console.log('mode is',this.noteMode);
-    if(this.noteMode === 'edit'){
+    if(this.noteMode === 'edit' && this.id !== -1){
       console.log('notemode :',this.noteMode);
       console.log('id via route :',this.id);
       this.updateNote();
     }
-    if(this.noteMode === 'create'){
+    if(this.noteMode === 'create' && this.id === -1){
       console.log('notemode :',this.noteMode);
-      this.setNewNote();
+      this.note = {
+        title : '',
+        description : '',
+        isImportant : false,
+      }
+      this.setNewNote(this.note);
     }
+   
   }
-  setNewNote(){
+
+  setNewNote(note){
+    console.log('beginning exec for set new note with note as',note);
     this.noteForm  = new FormGroup({
-      'title' : new FormControl('',Validators.required),
-      'description' : new FormControl('',Validators.required),
-      'isImportant' : new FormControl(false,Validators.required)
+      'title' : new FormControl(note.title,Validators.required),
+      'description' : new FormControl(note.description,Validators.required),
+      'isImportant' : new FormControl(note.isImportant)
     });
+    console.log('set note executed');
   }
+
   updateNote(){
     this.note = this.notesService.notes[this.id];
     console.log('note to be updated is ',this.note);
     this.noteForm  = new FormGroup({
       'title' : new FormControl(this.note.title,Validators.required),
       'description' : new FormControl(this.note.description,Validators.required),
-      'isImportant' : new FormControl(this.note.isImportant,Validators.required)
+      'isImportant' : new FormControl(this.note.isImportant)
     });
+    console.log('update note executed');
   }
+
   onSubmit(){
     console.log('submitted');
-    console.log('is note important value',this.isImp);
+    console.log('is note important value',this.noteForm.value);
   
     if(this.noteMode === 'edit'){
-      
-      console.log(this.note);
-      
-      console.log('edited note is ', this.note);
       this.note.title = this.noteForm.value.title; 
       this.note.description = this.noteForm.value.description;
-      this.note.isImportant = this.noteForm.value.isImp;
+      this.note.isImportant = this.noteForm.value.isImportant;
       this.notesService.onUpdateNote(this.id,this.note); 
       this.successMessage = 'you have successfully edited the current note';
     }

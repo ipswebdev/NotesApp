@@ -47,7 +47,7 @@ export class NotesService{
                 // }
                 this.notes = response;
                 this.notesFetched.next(1);
-            console.log('notes are',this.notes);
+            // console.log('notes are',this.notes);
             }
         );
     }
@@ -56,8 +56,8 @@ export class NotesService{
         return this.notes;
     }
     getSingleNote(index): Notes{
-        console.log('getSingleNote ran for index',index);
-        console.log('getSingleNote O/P',this.notes[index]);
+        // console.log('getSingleNote ran for index',index);
+        // console.log('getSingleNote O/P',this.notes[index]);
         return this.notes[index];
     }
     addNewNote(noteReceived : Notes){

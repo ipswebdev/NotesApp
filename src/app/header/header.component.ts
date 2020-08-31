@@ -16,6 +16,6 @@ export class HeaderComponent implements OnInit {
 
   }
   createNewNote(){
-    this.router.navigate(['notes-detail','create']);
+    this.router.navigate(['notes-detail',-1,'create']);
   }
 }

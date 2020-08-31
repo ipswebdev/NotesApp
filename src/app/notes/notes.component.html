@@ -1,13 +1,19 @@
- 
 <div class="wrapper">
-    <div class="note-card note-card--default" (click)="toEdit(i)" *ngFor="let note of notesArr;let i=index">
-        <div class="heading">
-            {{note.title}}
+    <span class="note-card--important">Important Note</span>
+    <div class="wrapper">
+        <div class="note-card" 
+        [ngClass]="{'note-card--default': !note.isImportant,'note-card--important': note.isImportant}"
+        (click)="toEdit(i)"
+        *ngFor="let note of notesArr;let i=index">
+
+            <div class="heading">  
+                {{note.title}}
+            </div>
+            <div class="body">
+                {{note.description}}
+            </div> 
+            
         </div>
-        <div class="body">
-            {{note.description}}
-        </div> 
-        <span *ngIf="note.isImportant">Important Note</span>    
     </div>
+    <div>
 </div>
-<div>

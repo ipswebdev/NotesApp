@@ -1,6 +1,6 @@
-
+<div class="wrapper">
 <p *ngIf="successNotification">{{successMessage}}</p>
-<div *ngIf="noteForm">
+<div class="note-card" *ngIf="noteForm">
 <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
    <div>
     <input
@@ -10,6 +10,7 @@
     </div>
     <div>
     <input
+    class="description"
     type="text"
     placeholder="Description of Note"
     formControlName="description">
@@ -26,3 +27,4 @@
 </form>    
 </div>
 <div *ngIf="!noteForm">your note is loading..</div>
+</div>

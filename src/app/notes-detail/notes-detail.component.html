@@ -1,29 +1,28 @@
 
-    <p>{{successMessage}}</p>
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <h4>Edit Note</h4>
-    <div>
-    <label for="title">
-        Title
-    </label>
-    <input type="text"
-    formControlName="title"
-    id="title">
+<p *ngIf="successNotification">{{successMessage}}</p>
+<div *ngIf="noteForm">
+<form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+   <div>
+    <input
+    type="text"
+    placeholder="Title of Note"
+    formControlName="title">
     </div>
     <div>
-    <label for="description">Description</label>
-    <input 
+    <input
     type="text"
+    placeholder="Description of Note"
     formControlName="description">
     </div>
-    <label for="isImp">
-    <input type="checkbox" [(ngModel)]="isImp" [ngModelOptions]="{standalone: true}">
-    Important Note
-    </label>
-    <button type="submit" *ngIf="noteMode === 'edit'" [disabled]="!form.valid">
-        Edit Note
-    </button>
-    <button type="submit" *ngIf="noteMode === 'create'" [disabled]="!form.valid">
-        Create Note
-    </button>
-    </form>
+    <div>
+    <input
+    type="checkbox"
+    formControlName="isImportant">
+    </div>
+    <div>
+    <button type="submit" *ngIf="noteMode === 'create'" [disabled] ="!noteForm.valid">Create New Note</button>
+    <button type="submit" *ngIf="noteMode === 'edit'" [disabled] ="!noteForm.valid">Edit Note</button>
+    </div>
+</form>    
+</div>
+<div *ngIf="!noteForm">your note is loading....</div>

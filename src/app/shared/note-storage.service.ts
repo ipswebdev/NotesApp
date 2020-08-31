@@ -5,7 +5,6 @@ import { NotesService } from './notes.service';
 
 import { HttpClient } from '@angular/common/http';
 
-
 @Injectable(
     {
         providedIn : 'root'
@@ -26,6 +25,6 @@ export class NoteStorage{
         
     }
     addNote(note : Notes){
-        return this.http.post('https://omdb-project-11edb.firebaseio.com/notes.json',note)
+        return this.http.post('https://omdb-project-11edb.firebaseio.com/notes.json',note);
     }
 }

@@ -1,0 +1,11 @@
+.alert{
+    margin-bottom: 1rem;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-align: center;
+    &.alert-danger{
+        color: red;
+        background-color:rgba($color: red, $alpha: 0.3) ;
+        border: 1px solid red;
+    }
+}

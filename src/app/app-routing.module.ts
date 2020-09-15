@@ -4,6 +4,7 @@ import { NotesComponent } from './notes/notes.component';
 import { NotesDetailComponent } from './notes-detail/notes-detail.component';
 import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
 import { NotesResolver } from './shared/noteResolver.service';
+import { AuthComponent } from './auth/auth/auth.component';
 
 export const routes: Routes = [
   {
@@ -20,8 +21,8 @@ export const routes: Routes = [
     resolve : { NotesEdit : NotesResolver}
   },
   {
-    path : 'notes-detail/:mode',
-    component : NotesDetailComponent,
+    path : 'auth',
+    component : AuthComponent,
   },
   { 
     path: '404', 

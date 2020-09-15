@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotesResolver } from "./shared/noteResolver.service";
 import { NotesService } from './shared/notes.service';
+import { AuthComponent } from './auth/auth/auth.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NotesService } from './shared/notes.service';
     NotesItemComponent,
     NotesDetailComponent,
     PathNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

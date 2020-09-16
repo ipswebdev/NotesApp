@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { authService } from 'src/app/shared/auth.service';
+import { authService,AuthResponse } from 'src/app/shared/auth.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class AuthComponent implements OnInit {
   }
   onSubmit(authForm : NgForm){
     this.isLoading = true;
+    let AuthObservable :Observable <AuthResponse>;
     if(!authForm.valid){
       console.log('invalid')
     }
@@ -31,7 +33,20 @@ export class AuthComponent implements OnInit {
       password : password,
       returnSecureToken : true
     };
-    this.authService.signUp(token).subscribe(
+    AuthObservable = this.authService.signUp(token);
+    }
+    if(this.loginMode){
+      console.log('YOU TRIED TO LOGIN!');
+      const email = authForm.value.email;
+      const password = authForm.value.password;
+    const token = {
+      email : email,
+      password : password,
+      returnSecureToken : true
+    };
+    AuthObservable = this.authService.login(token);
+    }
+    AuthObservable.subscribe(
       (data) => {
         console.log('SUCCESS');
         console.log(data);
@@ -43,10 +58,6 @@ export class AuthComponent implements OnInit {
         this.isLoading = false;
       }
     );
-    }
-    if(this.loginMode){
-      console.log('YOU TRIED TO LOGIN!');
-    }
     this.authenticator.reset();
   }
   switchMode(){

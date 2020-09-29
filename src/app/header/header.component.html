@@ -1,7 +1,7 @@
 <div>
-    <button [routerLink]="['/notes']">Back to All Notes</button>
-    <button [routerLink]="['/auth']">Authenticator</button>
-    <button style="float: right;" (click)="createNewNote()">Add New Note</button>
+    <button [routerLink]="['/notes']" *ngIf="isAuthenticated">Back to All Notes</button>
+    <button [routerLink]="['/auth']" *ngIf="!isAuthenticated">Authenticator</button>
+    <button style="float: right;" *ngIf="isAuthenticated" (click)="createNewNote()">Add New Note</button>
     
-    <!-- <button style="float:right;" (click)="getAllNotes()">Get Notes</button> -->
+    <button style="float:right;" *ngIf="isAuthenticated" >Logout</button>
 </div>

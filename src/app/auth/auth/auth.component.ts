@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { authService,AuthResponse } from 'src/app/shared/auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class AuthComponent implements OnInit {
   isLoading :boolean = false; 
   error :string = null;
   @ViewChild('authForm', {static: false}) authenticator : NgForm;
-  constructor(private authService : authService) { }
+  constructor(private authService : authService, private router : Router) { }
 
   ngOnInit(): void {
   }
@@ -51,6 +52,7 @@ export class AuthComponent implements OnInit {
         console.log('SUCCESS');
         console.log(data);
         this.isLoading = false;
+        this.router.navigate(['/notes'])
       },
       (errorMessage) => {
         console.log('ERROR');

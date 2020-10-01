@@ -5,19 +5,23 @@ import { NotesDetailComponent } from './notes-detail/notes-detail.component';
 import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
 import { NotesResolver } from './shared/noteResolver.service';
 import { AuthComponent } from './auth/auth/auth.component';
+import { AuthGuard } from './shared/auth.guard';
 
 export const routes: Routes = [
   {
     path : '',
-    component : NotesComponent 
+    component : NotesComponent,
+    canActivate : [AuthGuard],
   },
   {
     path : 'notes',
-    component : NotesComponent
+    component : NotesComponent,
+    canActivate : [AuthGuard],
   },
   {
     path : 'notes-detail/:id/:mode',
     component : NotesDetailComponent,
+    canActivate : [AuthGuard],
     resolve : { NotesEdit : NotesResolver}
   },
   {

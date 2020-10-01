@@ -17,16 +17,7 @@ export class NoteStorage{
     notes : Notes[] = [];
     constructor(private http : HttpClient, private auth:authService){}
     fetchNotes(){
-        return this.auth.user.pipe(
-            take(1),
-            exhaustMap(
-                user => {
-                    return this.http.get<Notes[]>('https://omdb-project-11edb.firebaseio.com/notes.json',{
-                        params : new HttpParams().set('auth',user.token)
-                    })
-                }
-            ))
-        
+        return this.http.get<Notes[]>('https://omdb-project-11edb.firebaseio.com/notes.json');
     }
     update(note){
         const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+note.id+'/.json';

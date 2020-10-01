@@ -3,5 +3,5 @@
     <button [routerLink]="['/auth']" *ngIf="!isAuthenticated">Authenticator</button>
     <button style="float: right;" *ngIf="isAuthenticated" (click)="createNewNote()">Add New Note</button>
     
-    <button style="float:right;" *ngIf="isAuthenticated" >Logout</button>
+    <button style="float:right;" *ngIf="isAuthenticated" (click)="logout()" >Logout</button>
 </div>

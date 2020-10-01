@@ -9,10 +9,11 @@ import { NotesItemComponent } from './notes/notes-item/notes-item.component';
 import { NotesDetailComponent } from './notes-detail/notes-detail.component';
 import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
 import { HeaderComponent } from './header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NotesResolver } from "./shared/noteResolver.service";
 import { NotesService } from './shared/notes.service';
 import { AuthComponent } from './auth/auth/auth.component';
+import { AuthInterceptor } from './shared/auth-interceptor.service';
 
 
 @NgModule({
@@ -32,7 +33,11 @@ import { AuthComponent } from './auth/auth/auth.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide : HTTP_INTERCEPTORS,
+    useClass : AuthInterceptor,
+    multi : true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

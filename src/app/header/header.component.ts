@@ -25,6 +25,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     )
   }
+  logout(){
+    this.authService.logout();
+  }
   createNewNote(){
     this.router.navigate(['notes-detail',-1,'create']);
   }

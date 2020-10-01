@@ -25,6 +25,7 @@ export interface AuthResponse {
 export class authService{
     constructor(private httpClient : HttpClient, private router : Router){}
     user = new BehaviorSubject<User>(null);
+    private tokenExpTimer : any;
     signUp(data){
       return  this.httpClient
       .post<AuthResponse>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDCWIwF-NJWve6WWlb6hl_ThzHmjXctASg',data)
@@ -63,7 +64,13 @@ export class authService{
     logout(){
       this.user.next(null);
       this.router.navigate(['/auth']);
+      localStorage.removeItem('userAuth');
+      if(this.tokenExpTimer){
+        clearTimeout(this.tokenExpTimer);
+      }
+      this.tokenExpTimer = null;
     }
+    
     autoLogin(){
       const userData  : {
         email : string;
@@ -84,10 +91,19 @@ export class authService{
       );
       if(loadedUser.token){
         this.user.next(loadedUser);
+        const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+        this.autoLogout(expirationDuration);  
       }
       
 
     }
+
+    autoLogout(expirationDuration : number){
+     this.tokenExpTimer = setTimeout(() => {
+        this.logout();
+      },expirationDuration)
+    }
+
     private errorHandler(errorResponse : HttpErrorResponse){
       let errorMessage = 'Some Unknown Error occured!';
             if(!errorResponse.error || !errorResponse.error.error){
@@ -113,6 +129,7 @@ export class authService{
       const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000)
       const user = new User(email,id,token,expirationDate);
       this.user.next(user);
+      this.autoLogout(expiresIn*1000);
       localStorage.setItem('userAuth', JSON.stringify(user));
     }
 }

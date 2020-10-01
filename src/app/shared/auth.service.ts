@@ -64,6 +64,30 @@ export class authService{
       this.user.next(null);
       this.router.navigate(['/auth']);
     }
+    autoLogin(){
+      const userData  : {
+        email : string;
+        id : string;
+        _token : string;
+        _tokenExpirationDate : string;
+      } =  JSON.parse(localStorage.getItem('userAuth'));
+      
+      if(!userData){
+        return;
+      }
+
+      const loadedUser = new User(
+        userData.email,
+        userData.id,
+        userData._token,
+        new Date(userData._tokenExpirationDate)
+      );
+      if(loadedUser.token){
+        this.user.next(loadedUser);
+      }
+      
+
+    }
     private errorHandler(errorResponse : HttpErrorResponse){
       let errorMessage = 'Some Unknown Error occured!';
             if(!errorResponse.error || !errorResponse.error.error){
@@ -89,5 +113,6 @@ export class authService{
       const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000)
       const user = new User(email,id,token,expirationDate);
       this.user.next(user);
+      localStorage.setItem('userAuth', JSON.stringify(user));
     }
 }

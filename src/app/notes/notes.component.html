@@ -1,13 +1,13 @@
 <div class="wrapper">
-    <span class="note-card--important">Important Note</span>
+    <span class="note-card--important"><img src="assets/icons/important-note.png" alt="important-note"> Important </span>
     <div class="wrapper">
-        <div class="note-card" 
-        [ngClass]="{'note-card--default': !note.isImportant,'note-card--important': note.isImportant}"
+        <div class="note-card note-card--default" 
         (click)="toEdit(i)"
         *ngFor="let note of notesArr;let i=index">
-
             <div class="heading">  
+                <img src="assets/icons/important-note.png"*ngIf="note.isImportant" alt="important-note">
                 {{note.title}}
+                
             </div>
             <div class="body">
                 {{note.description}}

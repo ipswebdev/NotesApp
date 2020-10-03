@@ -44,7 +44,15 @@ button{
     outline: none;
     color:rgba(#000,0.6);
     border-color:rgba(#000,0.4);
+    cursor: pointer;
     &:hover{
         background-color: rgba(#000,0.2);
     }
+}
+button:disabled{
+    cursor: not-allowed;
+    background-color: #fff;
+}
+input{
+    cursor: pointer;
 }

@@ -1,24 +1,25 @@
 <div class="wrapper">
 <p *ngIf="successNotification">{{successMessage}}</p>
-<div class="note-card" *ngIf="noteForm">
+<div class="card" *ngIf="noteForm">
 <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
    <div>
-    <input
+    <textarea
     type="text"
     placeholder="Title of Note"
     formControlName="title">
-    </div>
-    <div>
-    <input
-    class="description"
+    </textarea>
+    <textarea
+    rows="7"    
     type="text"
     placeholder="Description of Note"
     formControlName="description">
+    </textarea>
     </div>
-    <div>
+    <div class="imp-field">
     <input
     type="checkbox"
     formControlName="isImportant">
+    <span> Important Note</span>
     </div>
     <div>
     <button type="submit" *ngIf="noteMode === 'create'" [disabled] ="!noteForm.valid">Create New Note</button>

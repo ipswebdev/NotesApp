@@ -45,6 +45,15 @@ body::-webkit-scrollbar {
         background-color: rgba(yellow,0.5);
         border-color: rgba(yellow,0.8);
     }
+    &--sample{
+        width: 130px;
+        padding: 10px;
+        min-height: auto;
+        &:hover{
+            box-shadow: none!important;
+            transform: none!important;
+        }
+    }
     &__important{
         position: absolute;
         right: -17px;

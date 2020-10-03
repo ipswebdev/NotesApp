@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="note-card note-card--default">
+    <div class="note-card note-card--sample note-card--default">
         Important note
         <div class="note-card__important"></div>
     </div>
@@ -9,9 +9,7 @@
         *ngFor="let note of notesArr;let i=index">
             <div class="note-card__important" *ngIf="note.isImportant"></div>
             <div class="heading">  
-                <img src="assets/icons/important-note.png"*ngIf="note.isImportant" alt="important-note">
-                {{note.title}}
-                
+                {{note.title}}            
             </div>
             <div class="body">
                 {{note.description}}

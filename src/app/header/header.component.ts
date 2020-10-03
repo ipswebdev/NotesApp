@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NotesService } from '../shared/notes.service';
 import { Notes } from '../shared/note.model';
 import { Router } from '@angular/router';
-import { AuthComponent } from '../auth/auth/auth.component';
 import { Subscription } from 'rxjs';
 import { authService } from '../shared/auth.service';
 
@@ -16,14 +15,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private userSub : Subscription;
   isAuthenticated = false;
   
-  constructor(private notesService : NotesService, private router : Router, private authService : authService) { }
+  constructor(private notesService : NotesService, private router : Router, private authService : authService) {}
 
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe(
       (user)=>{
         this.isAuthenticated = !user ? false : true ;
       }
-    )
+    ) 
   }
   logout(){
     this.authService.logout();

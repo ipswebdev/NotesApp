@@ -62,9 +62,12 @@ input{
     width: 100%;
 }
 input.ng-touched.ng-invalid{
-    color: red;
-    background-color:rgba($color: red, $alpha: 0.1) ;
-    border: 1px solid red;
+    color: red!important;
+    background-color:rgba($color: red, $alpha: 0.1) !important;
+    border: 1px solid red!important;
+}
+input.ng-touched.ng-valid{
+    border: 1px solid rgba(0,225,0,0.8)!important;
 }
 .warning{
     color: red;

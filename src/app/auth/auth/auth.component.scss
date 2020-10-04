@@ -9,3 +9,72 @@
         border: 1px solid red;
     }
 }
+
+.wrapper{
+    display: block;
+    width: 100%;
+    max-width: 475px;
+    padding: 2rem 4rem;
+    margin: 0 auto;
+}
+h3{
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: rgba(#000,0.5);
+    width: 100%;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(#000,0.8);
+    border-radius:0.3rem;
+    padding: 1rem 1.125rem;
+}
+button{
+    background: transparent;
+    padding: 0.3rem .75rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    width: 100%;
+    border-radius: 0.3rem;
+    outline: none;
+    color:rgba(#000,0.6);
+    border-color:rgba(#000,0.4);
+    margin-bottom: 1rem;
+    cursor: pointer;
+    &:last-child{
+        margin-bottom: 0;
+    }
+}
+button[type=submit]{
+    background-color: rgba(#000,0.2);
+}
+button:disabled{
+    cursor: not-allowed;
+    background-color: #fff;
+}
+input{
+    cursor: pointer;
+    border: 1px solid rgba(#000,0.5);
+    border-radius: 0.3rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+input.ng-touched.ng-invalid{
+    color: red;
+    background-color:rgba($color: red, $alpha: 0.1) ;
+    border: 1px solid red;
+}
+.warning{
+    color: red;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+}
+
+label{
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    color:rgba(#000,0.5);
+}

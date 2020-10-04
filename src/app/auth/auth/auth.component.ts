@@ -40,7 +40,8 @@ export class AuthComponent implements OnInit {
       console.log('YOU TRIED TO LOGIN!');
       const email = authForm.value.email;
       const password = authForm.value.password;
-    const token = {
+      console.log(authForm)
+      const token = {
       email : email,
       password : password,
       returnSecureToken : true

@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <h3> Login | Sign up</h3>
+    <h3>{{ loginMode ? 'Login' : 'Sign Up' }}</h3>
     <div class="alert alert-danger"*ngIf="error">
         {{error}}
     </div>
@@ -30,8 +30,9 @@
                 Use a valid Email and a password with min length of 6 characters
             </div>
             <div>
+                
+                <button type="button" (click)="switchMode()">Switch to {{ loginMode ? 'Sign Up' : 'Login' }} Mode</button>
                 <button type="submit" [disabled]="!authForm.valid">{{ loginMode ? 'Login' : 'Sign Up' }}</button>
-                <button type="button" (click)="switchMode()">Switch to {{ loginMode ? 'Login' : 'Sign Up' }} Mode</button>
             </div>
         </div>
     </form>

@@ -1,8 +1,8 @@
 <div class="wrapper">
     <h3>{{ loginMode ? 'Login' : 'Sign Up' }}</h3>
-    <app-alert-component [message]="error"
+    <!-- <app-alert-component [message]="error"
     *ngIf="error"
-    (close) = "handleError()"></app-alert-component>
+    (close) = "handleError()"></app-alert-component> -->
     <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm" *ngIf="!isLoading">
         <div class="card">    
             <div>

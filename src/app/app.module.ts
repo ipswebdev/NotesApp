@@ -15,6 +15,7 @@ import { NotesService } from './shared/notes.service';
 import { AuthComponent } from './auth/auth/auth.component';
 import { AuthInterceptor } from './shared/auth-interceptor.service';
 import { AlertComponentComponent } from './alert-component/alert-component.component';
+import { PlaceholderDirective } from './shared/placeholder.directive';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AlertComponentComponent } from './alert-component/alert-component.compo
     PathNotFoundComponent,
     HeaderComponent,
     AuthComponent,
-    AlertComponentComponent
+    AlertComponentComponent,
+    PlaceholderDirective
   ],
   imports: [
     BrowserModule,

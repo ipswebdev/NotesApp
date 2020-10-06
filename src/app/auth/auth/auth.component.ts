@@ -40,7 +40,6 @@ export class AuthComponent implements OnInit {
       console.log('YOU TRIED TO LOGIN!');
       const email = authForm.value.email;
       const password = authForm.value.password;
-      console.log(authForm)
       const token = {
       email : email,
       password : password,
@@ -50,7 +49,6 @@ export class AuthComponent implements OnInit {
     }
     AuthObservable.subscribe(
       (data) => {
-        console.log('SUCCESS');
         console.log(data);
         this.isLoading = false;
         this.router.navigate(['/notes'])
@@ -65,6 +63,9 @@ export class AuthComponent implements OnInit {
   }
   switchMode(){
     this.loginMode = !this.loginMode;
+  }
+  handleError(){
+    this.error=null;
   }
 
 }

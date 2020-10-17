@@ -44,6 +44,9 @@ export class NotesService{
             (response) => {
                 this.notes = response;
                 this.notesFetched.next(1);
+            },
+            (err) => {
+                this.notesFetched.next(0);
             }
         );
     }

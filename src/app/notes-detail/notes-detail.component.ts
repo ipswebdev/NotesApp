@@ -32,9 +32,12 @@ export class NotesDetailComponent implements OnInit {
       });
       this.notesService.notesFetched.subscribe(
         (response)=>{
-          if(response === 1){
+          // if(response === 1){
             this.fetchParams();       
-          }
+          // }
+          // if(response === 0){
+            // this.fetchParams();
+          // }
         }
       );      
   }
@@ -102,7 +105,7 @@ export class NotesDetailComponent implements OnInit {
       this.notesService.addNewNote(this.note);
       this.successMessage = 'you have successfully created an new note';
     }
-    this.noteForm.reset();
+    // this.noteForm.reset();
     this.successNotification = true;
   }
 }

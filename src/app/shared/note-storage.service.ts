@@ -6,6 +6,7 @@ import { NotesService } from './notes.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { authService } from './auth.service';
 import { exhaustMap, take } from 'rxjs/operators';
+import { User } from './user.model';
 
 @Injectable(
     {
@@ -15,18 +16,37 @@ import { exhaustMap, take } from 'rxjs/operators';
 
 export class NoteStorage{
     notes : Notes[] = [];
+    userId : string = '';
     constructor(private http : HttpClient, private auth:authService){}
+    fetchUserId(){
+        this.auth.user.pipe(
+            take(1)
+        )
+        .subscribe(
+            (data:User)=>{
+                this.userId = data.id;
+                // console.log('user id is :',this.userId);
+        })            
+    }
     fetchNotes(){
-        return this.http.get<Notes[]>('https://omdb-project-11edb.firebaseio.com/notes.json');
+        this.fetchUserId();
+        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'.json';
+        // console.log('user id is inside fetchNotes',this.userId);
+        return this.http.get<Notes[]>(url);
     }
     update(note){
-        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+note.id+'/.json';
+        // this.fetchUserId();
+        // const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+note.id+'/.json';
+        this.fetchUserId();
+        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'/'+note.id+'.json';
         console.log('this the url used',url);
         console.log('this the note sent',note);
         return this.http.patch<Notes>(url,note);
         
     }
     addNote(note : Notes){
-        return this.http.post('https://omdb-project-11edb.firebaseio.com/notes.json',note);
+        this.fetchUserId();
+        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'.json';
+        return this.http.post(url,note);
     }
 }

@@ -108,4 +108,8 @@ export class NotesDetailComponent implements OnInit {
     // this.noteForm.reset();
     this.successNotification = true;
   }
+
+  deleteNote(){
+    this.notesService.deleteNote(this.id);
+  }
 }

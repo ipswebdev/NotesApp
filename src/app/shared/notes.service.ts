@@ -87,4 +87,14 @@ export class NotesService{
             }
         );
     }
+
+    deleteNote(id:number){
+        this.notesStorage.deleteNote(id).subscribe(
+            (response)=>{
+                console.log('response is',response);
+                this.notes.splice(id,1);
+                console.log(this.notes);
+            }
+        )
+    }
 }

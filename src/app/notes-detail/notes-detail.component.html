@@ -26,6 +26,8 @@
     <button type="submit" *ngIf="noteMode === 'edit'" [disabled] ="!noteForm.valid">Edit Note</button>
     </div>
 </form>    
+<button type="submit" *ngIf="noteMode === 'create'" [routerLink]="['/notes']">Delete Note</button>
+    <button type="submit" *ngIf="noteMode === 'edit'" (click)="deleteNote()">Delete Note</button>
 </div>
 <div *ngIf="!noteForm">your note is loading..</div>
 </div>

@@ -49,4 +49,9 @@ export class NoteStorage{
         const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'.json';
         return this.http.post(url,note);
     }
+    deleteNote(noteId){
+        this.fetchUserId();
+        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'/'+noteId+'.json';
+        return this.http.delete(url);
+    }
 }

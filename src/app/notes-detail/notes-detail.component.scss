@@ -40,19 +40,34 @@ button{
     font-weight: 600;
     font-size: 0.85rem;
     width: 100%;
-    border-radius: 0.3rem;
-    outline: none;
-    color:rgba(#000,0.6);
-    border-color:rgba(#000,0.4);
+    border-radius: 0.3rem!important;
+    outline: none!important;
+    color:rgba(#000,0.6)!important;
+    border-color:rgba(#000,0.4)!important;
+    margin-bottom: 0.75rem;
     cursor: pointer;
     &:hover{
-        background-color: rgba(#000,0.2);
+        background-color: rgba(#000,0.2)!important;
     }
 }
 button:disabled{
-    cursor: not-allowed;
-    background-color: #fff;
+    cursor: not-allowed!important;
+    background-color:rgba(#000,0.4)!important;
+    border-color:rgba(#000,0.4)!important;
+    &:hover{
+        background-color: rgba(#000,0.2)!important;
+    }
+}
+.button--delete{
+    border-color:rgba($color: red, $alpha: 0.5);
+    background-color:rgba($color: red, $alpha: 0.5);
+    color: rgba($color: red, $alpha: 0.5);
+    &:hover{
+        border-color:red!important;
+        background-color:rgba($color: red, $alpha: 0.5)!important;
+        color: red!important;
+    }
 }
 input{
-    cursor: pointer;
+    cursor: pointer!important;
 }

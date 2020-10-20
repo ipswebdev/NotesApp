@@ -12,6 +12,7 @@ import { NoteStorage } from '../shared/note-storage.service';
 })
 export class NotesComponent implements OnInit, OnDestroy {
   notesArr : Notes[] = [];
+  notesFetched : boolean = false;
   newNote : Notes ={
     title:'',
     description:'',
@@ -27,24 +28,16 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.notesService.notesFetched.subscribe(
       (response)=>{
         if(response === 1){
+          this.notesFetched = true;
           this.notesArr = this.notesService.getNotes();
+        }
+        if(response === 0){
+          this.notesFetched = true;
+          this.notesArr.length = 0;
         }
       }
     );
    
-  }
-
-  getNote(){
-    console.log(this.notesService.getSingleNote(1));
-
-  }
- 
-  setterSubscription : Subscription;
-
-  addNote(note : Notes){
-    this.newNote = note; 
-    console.log('new Note : ',note);
-    console.log('new Note : ',this.newNote);
   }
   toEdit(index){
     this.router.navigate(['notes-detail',index,'edit']);

@@ -1,17 +1,18 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Route, Router, Params, Data } from '@angular/router';
 import { Notes } from '../shared/note.model';
 import { NotesService } from '../shared/notes.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotesResolver } from '../shared/noteResolver.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notes-detail',
   templateUrl: './notes-detail.component.html',
   styleUrls: ['./notes-detail.component.scss']
 })
-export class NotesDetailComponent implements OnInit {
+export class NotesDetailComponent implements OnInit,OnDestroy {
   note : Notes ;
   notesArr;
   id : number;
@@ -20,8 +21,9 @@ export class NotesDetailComponent implements OnInit {
   noteMode : string;
   successMessage : string;
   successNotification : boolean;
+  notesFetchSub : Subscription;
 
-  constructor(private route : ActivatedRoute, private notesService : NotesService,private resolver : NotesResolver) { }
+  constructor(private route : ActivatedRoute, private notesService : NotesService,private resolver : NotesResolver, private router : Router) { }
 
   ngOnInit(): void {
     this.successNotification = false;
@@ -30,11 +32,14 @@ export class NotesDetailComponent implements OnInit {
       (data : Data)=>{
         this.notesArr=data.NotesEdit;
       });
-      this.notesService.notesFetched.subscribe(
+      this.notesFetchSub=this.notesService.notesFetched.subscribe(
         (response)=>{
-          if(response === 1){
+          // if(response === 1){
             this.fetchParams();       
-          }
+          // }
+          // if(response === 0){
+            // this.fetchParams();
+          // }
         }
       );      
   }
@@ -101,8 +106,26 @@ export class NotesDetailComponent implements OnInit {
       console.log(this.note);
       this.notesService.addNewNote(this.note);
       this.successMessage = 'you have successfully created an new note';
+      this.noteForm.reset();
+      setTimeout(()=>{
+        this.router.navigate(['/notes']);
+      },2500)
     }
-    this.noteForm.reset();
+    // this.noteForm.reset();
     this.successNotification = true;
+  }
+
+  deleteNote(){
+    this.notesService.deleteNote(this.id);
+    this.noteForm.reset();
+    this.successMessage = 'you have successfully deleted your note';
+    this.successNotification = true;
+    setTimeout(()=>{
+      this.router.navigate(['/notes']);
+    },2500)
+  }
+
+  ngOnDestroy(){
+    this.notesFetchSub.unsubscribe();
   }
 }

@@ -1,4 +1,13 @@
-<div class="wrapper">
+<div class="" *ngIf="!notesFetched" style="text-align: center;margin-top: 25vh;">
+    <img src="/assets/icons/spinner.gif" alt="spinner">
+</div>
+<div *ngIf="notesFetched && notesArr.length === 0" style="text-align: center;margin-top: 25vh;">
+    <p style="margin-bottom: 30px;">You have no notes...</p>
+    <div>
+        <button class [routerLink]="['/notes-detail',-1,'create']">Add New Note</button>
+    </div>    
+</div>
+<div class="wrapper" *ngIf="notesFetched && notesArr.length">
     <div class="note-card note-card--sample note-card--default">
         Important note
         <div class="note-card__important"></div>
@@ -14,7 +23,6 @@
             <div class="body">
                 {{note.description}}
             </div> 
-            
         </div>
     </div>
     <div>

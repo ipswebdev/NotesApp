@@ -27,23 +27,34 @@ export class NotesService{
         this.notesStorage.fetchNotes()
         .pipe(map(
             (response) => {
-                let allNotes = [];
-                const arrOfNotes =  Object.keys(response);
-                    for (let i=0;i<arrOfNotes.length;i++) {
-                         allNotes.push(
-                             {
-                             id : arrOfNotes[i],
-                             ...response[arrOfNotes[i]]
-                            }
-                         );
-                    }
-                return allNotes;
+                if(response){
+                    let allNotes = [];
+                    const arrOfNotes =  Object.keys(response);
+                        for (let i=0;i<arrOfNotes.length;i++) {
+                             allNotes.push(
+                                 {
+                                 id : arrOfNotes[i],
+                                 ...response[arrOfNotes[i]]
+                                }
+                             );
+                        }
+                    return allNotes;
+                }
+                if(!response){
+                    return null
+                }
             }
         ))
         .subscribe(
             (response) => {
-                this.notes = response;
-                this.notesFetched.next(1);
+                if(response){
+                    this.notes = response;
+                    this.notesFetched.next(1);
+                }
+                if(response === null){
+                    this.notes = [];
+                    this.notesFetched.next(0);
+                }
             }
         );
     }
@@ -83,5 +94,24 @@ export class NotesService{
                 console.log('respponse of patch',response);
             }
         );
+    }
+
+    deleteNote(id:number){
+        console.log('note to be deleted is',this.notes[id]);
+        const noteId = this.notes[id].id;
+        console.log('numberic string for note is ...inside Service',noteId);
+        this.notesStorage.deleteNote(noteId).subscribe(
+            (response)=>{
+                console.log('response is',response);
+                if(response === null){
+                    this.notes.splice(id,1);
+                    console.log(this.notes);
+                }
+                else{
+                    console.log(this.notes);
+                }
+                
+            }
+        )
     }
 }

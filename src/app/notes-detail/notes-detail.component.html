@@ -22,12 +22,12 @@
     <span> Important Note</span>
     </div>
     <div>
-    <button type="submit" *ngIf="noteMode === 'create'" [disabled] ="!noteForm.valid">Create New Note</button>
-    <button type="submit" *ngIf="noteMode === 'edit'" [disabled] ="!noteForm.valid">Edit Note</button>
+    <button class="button" type="submit" *ngIf="noteMode === 'create'" [disabled] ="!noteForm.valid">Create New Note</button>
+    <button class="button" type="submit" *ngIf="noteMode === 'edit'" [disabled] ="!noteForm.valid">Edit Note</button>
     </div>
 </form>    
-<button type="submit" *ngIf="noteMode === 'create'" [routerLink]="['/notes']">Delete Note</button>
-    <button type="submit" *ngIf="noteMode === 'edit'" (click)="deleteNote()">Delete Note</button>
+<button class="button button--delete" type="submit" *ngIf="noteMode === 'create'" [routerLink]="['/notes']">Delete Note</button>
+    <button class="button button--delete" type="submit" *ngIf="noteMode === 'edit'" (click)="deleteNote()">Delete Note</button>
 </div>
-<div *ngIf="!noteForm">your note is loading..</div>
+<div *ngIf="!noteForm"> <img src="/assets/icons/spinner.gif" alt=""></div>
 </div>

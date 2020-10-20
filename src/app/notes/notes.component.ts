@@ -31,12 +31,17 @@ export class NotesComponent implements OnInit, OnDestroy {
           this.notesFetched = true;
           this.notesArr = this.notesService.getNotes();
         }
-      },
+        if(response === 0){
+          this.notesFetched = true;
+          this.notesArr.length = 0;
+        }
+      }/* ,
       (response) => {
         if(response === 0){
-          this.notesFetched = false;
+          this.notesFetched = true;
+          this.notesArr.length = null;
         }
-      }
+      } */
     );
    
   }

@@ -1,5 +1,11 @@
-<div class="wrapper" *ngIf="!notesFetched && !notesArr.length">
-    You have no notes .. add one by clicking on add new note button
+<div class="" *ngIf="!notesFetched" style="text-align: center;margin-top: 25vh;">
+    <img src="/assets/icons/spinner.gif" alt="spinner">
+</div>
+<div *ngIf="notesFetched && notesArr.length === 0" style="text-align: center;margin-top: 25vh;">
+    <p style="margin-bottom: 30px;">You have no notes...</p>
+    <div>
+        <button class [routerLink]="['/notes-detail',-1,'create']">Add New Note</button>
+    </div>    
 </div>
 <div class="wrapper" *ngIf="notesFetched && notesArr.length">
     <div class="note-card note-card--sample note-card--default">

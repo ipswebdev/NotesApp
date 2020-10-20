@@ -25,18 +25,14 @@ export class NoteStorage{
         .subscribe(
             (data:User)=>{
                 this.userId = data.id;
-                // console.log('user id is :',this.userId);
         })            
     }
     fetchNotes(){
         this.fetchUserId();
         const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'.json';
-        // console.log('user id is inside fetchNotes',this.userId);
         return this.http.get<Notes[]>(url);
     }
     update(note){
-        // this.fetchUserId();
-        // const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+note.id+'/.json';
         this.fetchUserId();
         const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'/'+note.id+'.json';
         console.log('this the url used',url);

@@ -43,17 +43,6 @@ export class NotesService{
                 if(!response){
                     return null
                 }
-                /* let allNotes = [];
-                const arrOfNotes =  Object.keys(response);
-                    for (let i=0;i<arrOfNotes.length;i++) {
-                         allNotes.push(
-                             {
-                             id : arrOfNotes[i],
-                             ...response[arrOfNotes[i]]
-                            }
-                         );
-                    }
-                return allNotes; */
             }
         ))
         .subscribe(
@@ -66,19 +55,7 @@ export class NotesService{
                     this.notes = [];
                     this.notesFetched.next(0);
                 }
-               /*  if(response){
-                  console.log('response is',response)
-                }
-                if(response === null){
-                    this.notes = null;
-                    this.notesFetched.next(0);
-                } */
-                
-            }/* ,
-            (err) => {
-                this.notesFetched.next(0);
-                // console.log('notes service empty ffetching',err)
-            } */
+            }
         );
     }
     getNotes(){

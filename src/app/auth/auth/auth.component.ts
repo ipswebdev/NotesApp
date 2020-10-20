@@ -48,7 +48,6 @@ export class AuthComponent implements OnInit,OnDestroy {
     AuthObservable = this.authService.signUp(token);
     }
     if(this.loginMode){
-      console.log('YOU TRIED TO LOGIN!');
       const email = authForm.value.email;
       const password = authForm.value.password;
       const token = {
@@ -60,12 +59,10 @@ export class AuthComponent implements OnInit,OnDestroy {
     }
     AuthObservable.subscribe(
       (data) => {
-        console.log(data);
         this.isLoading = false;
         this.router.navigate(['/notes'])
       },
       (errorMessage) => {
-        console.log('ERROR');
         this.error = errorMessage;
         this.showErrorAlert(errorMessage);
         this.isLoading = false;

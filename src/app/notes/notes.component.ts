@@ -35,29 +35,10 @@ export class NotesComponent implements OnInit, OnDestroy {
           this.notesFetched = true;
           this.notesArr.length = 0;
         }
-      }/* ,
-      (response) => {
-        if(response === 0){
-          this.notesFetched = true;
-          this.notesArr.length = null;
-        }
-      } */
+      }
     );
    
   }
-
- /*  getNote(){
-    console.log(this.notesService.getSingleNote(1));
-
-  }
- 
-  setterSubscription : Subscription;
-
-  addNote(note : Notes){
-    this.newNote = note; 
-    console.log('new Note : ',note);
-    console.log('new Note : ',this.newNote);
-  } */
   toEdit(index){
     this.router.navigate(['notes-detail',index,'edit']);
   }

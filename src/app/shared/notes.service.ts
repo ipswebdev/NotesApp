@@ -25,30 +25,30 @@ export class NotesService{
 
     fetchAllNotes(){
         this.notesStorage.fetchNotes()
-        .pipe(map(
-            (response) => {
-                if(response){
-                    let allNotes = [];
-                    const arrOfNotes =  Object.keys(response);
-                        for (let i=0;i<arrOfNotes.length;i++) {
-                             allNotes.push(
-                                 {
-                                 id : arrOfNotes[i],
-                                 ...response[arrOfNotes[i]]
-                                }
-                             );
-                        }
-                    return allNotes;
-                }
-                if(!response){
-                    return null
-                }
-            }
-        ))
+        // .pipe(map(
+        //     (response) => {
+        //         if(response){
+        //             let allNotes = [];
+        //             const arrOfNotes =  Object.keys(response);
+        //                 for (let i=0;i<arrOfNotes.length;i++) {
+        //                      allNotes.push(
+        //                          {
+        //                          id : arrOfNotes[i],
+        //                          ...response[arrOfNotes[i]]
+        //                         }
+        //                      );
+        //                 }
+        //             return allNotes;
+        //         }
+        //         if(!response){
+        //             return null
+        //         }
+        //     }
+        // ))
         .subscribe(
-            (response) => {
+            (response:any) => {
                 if(response){
-                    this.notes = response;
+                    this.notes = response.notes;
                     this.notesFetched.next(1);
                 }
                 if(response === null){
@@ -66,22 +66,23 @@ export class NotesService{
     }
     addNewNote(noteReceived : Notes){
         this.notesStorage.addNote(noteReceived)
-        .pipe(map(
-            (response) => {
-                for (const key in response) {
-                    if (response.hasOwnProperty(key)) {
-                        return response[key];
-                    }
-                }
-            }
-        ))
+        // .pipe(map(
+        //     (response) => {
+        //         for (const key in response) {
+        //             if (response.hasOwnProperty(key)) {
+        //                 return response[key];
+        //             }
+        //         }
+        //     }
+        // ))
         .subscribe((response)=>{
-            this.notes.push({
-                id : response,
-                title : noteReceived.title,
-                description : noteReceived.description,
-                isImportant : noteReceived.isImportant
-            })
+            console.log(response,'all notes',this.notes)
+            // this.notes.push({
+            //     id : response,
+            //     title : noteReceived.title,
+            //     description : noteReceived.description,
+            //     // isImportant : noteReceived.isImportant
+            // })
         });
         
     }

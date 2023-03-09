@@ -17,23 +17,30 @@ import { User } from './user.model';
 export class NoteStorage{
     notes : Notes[] = [];
     userId : string = '';
+    baseUrl = 'http://localhost:3000/api/';
     constructor(private http : HttpClient, private auth:authService){}
-    fetchUserId(){
-        this.auth.user.pipe(
-            take(1)
-        )
-        .subscribe(
-            (data:User)=>{
-                this.userId = data.id;
-        })            
-    }
+    // fetchUserId(){
+    //     this.auth.user.pipe(
+    //         take(1)
+    //     )
+    //     .subscribe(
+    //         (data:User)=>{
+    //             this.userId = data.id;
+    //     })            
+    // }
+    // fetchNotes(){
+    //     //this.fetchUserId();
+    //     const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'.json';
+    //     return this.http.get<Notes[]>(url);
+    // }
     fetchNotes(){
-        this.fetchUserId();
-        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'.json';
-        return this.http.get<Notes[]>(url);
+    // //this.fetchUserId();
+        const url = `${this.baseUrl}notes`;
+        console.log('fetch notes',url)
+        return this.http.get<{notes:Notes[],message:string}>(url);
     }
     update(note){
-        this.fetchUserId();
+        // //this.fetchUserId();
         const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'/'+note.id+'.json';
         console.log('this the url used',url);
         console.log('this the note sent',note);
@@ -41,12 +48,12 @@ export class NoteStorage{
         
     }
     addNote(note : Notes){
-        this.fetchUserId();
-        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'.json';
+        //this.fetchUserId();
+        const url = `${this.baseUrl}notes`;
         return this.http.post(url,note);
     }
     deleteNote(noteId:string){
-        this.fetchUserId();
+        //this.fetchUserId();
         console.log('note id is',noteId);
         const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'/'+noteId+'.json';
         return this.http.delete(url);

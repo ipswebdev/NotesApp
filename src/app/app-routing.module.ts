@@ -22,7 +22,7 @@ export const routes: Routes = [
     path : 'notes-detail/:id/:mode',
     component : NotesDetailComponent,
     canActivate : [AuthGuard],
-    resolve : { NotesEdit : NotesResolver}
+    // resolve : { NotesEdit : NotesResolver}
   },
   {
     path : 'auth',

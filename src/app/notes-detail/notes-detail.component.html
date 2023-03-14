@@ -26,7 +26,7 @@
     <button class="button" type="submit" *ngIf="noteMode === 'edit'" [disabled] ="!noteForm.valid">Edit Note</button>
     </div>
 </form>    
-<button class="button button--delete" type="submit" *ngIf="noteMode === 'create'" [routerLink]="['/notes']">Delete Note</button>
+<button class="button button--delete" type="submit" *ngIf="noteMode === 'create'" [routerLink]="['/notes']">Back to all Notes</button>
     <button class="button button--delete" type="submit" *ngIf="noteMode === 'edit'" (click)="deleteNote()">Delete Note</button>
 </div>
 <div *ngIf="!noteForm"> <img src="/assets/icons/spinner.gif" alt=""></div>

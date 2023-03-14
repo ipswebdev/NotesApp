@@ -25,30 +25,22 @@ export class NotesService{
 
     fetchAllNotes(){
         this.notesStorage.fetchNotes()
-        // .pipe(map(
-        //     (response) => {
-        //         if(response){
-        //             let allNotes = [];
-        //             const arrOfNotes =  Object.keys(response);
-        //                 for (let i=0;i<arrOfNotes.length;i++) {
-        //                      allNotes.push(
-        //                          {
-        //                          id : arrOfNotes[i],
-        //                          ...response[arrOfNotes[i]]
-        //                         }
-        //                      );
-        //                 }
-        //             return allNotes;
-        //         }
-        //         if(!response){
-        //             return null
-        //         }
-        //     }
-        // ))
+        .pipe(map(res=>{
+            return {notes:res.notes.map(note =>{
+                return {
+                    id:note._id,
+                    title:note.title,
+                    description:note.description
+                }
+            }),
+            message: res.message
+            }
+        }))
         .subscribe(
             (response:any) => {
                 if(response){
                     this.notes = response.notes;
+                    console.log(response)
                     this.notesFetched.next(1);
                 }
                 if(response === null){
@@ -97,21 +89,11 @@ export class NotesService{
         );
     }
 
-    deleteNote(id:number){
+    deleteNote(id:string){
         console.log('note to be deleted is',this.notes[id]);
-        const noteId = this.notes[id].id;
-        console.log('numberic string for note is ...inside Service',noteId);
-        this.notesStorage.deleteNote(noteId).subscribe(
+        this.notesStorage.deleteNote(id).subscribe(
             (response)=>{
                 console.log('response is',response);
-                if(response === null){
-                    this.notes.splice(id,1);
-                    console.log(this.notes);
-                }
-                else{
-                    console.log(this.notes);
-                }
-                
             }
         )
     }

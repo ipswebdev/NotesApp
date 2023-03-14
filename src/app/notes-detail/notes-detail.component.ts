@@ -6,6 +6,7 @@ import { NotesService } from '../shared/notes.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotesResolver } from '../shared/noteResolver.service';
 import { Subscription } from 'rxjs';
+import { NoteStorage } from '../shared/note-storage.service';
 
 @Component({
   selector: 'app-notes-detail',
@@ -15,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class NotesDetailComponent implements OnInit,OnDestroy {
   note : Notes ;
   notesArr;
-  id : number;
+  id : any;
   isImp =false;
   noteForm : FormGroup;
   noteMode : string;
@@ -23,42 +24,38 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
   successNotification : boolean;
   notesFetchSub : Subscription;
 
-  constructor(private route : ActivatedRoute, private notesService : NotesService,private resolver : NotesResolver, private router : Router) { }
+  constructor(private route : ActivatedRoute, private notesStorage : NoteStorage, private notesService : NotesService,private resolver : NotesResolver, private router : Router) { }
 
   ngOnInit(): void {
     this.successNotification = false;
     console.log('oninit started');
-    this.route.data.subscribe(
-      (data : Data)=>{
-        this.notesArr=data.NotesEdit;
-      });
-      this.notesFetchSub=this.notesService.notesFetched.subscribe(
-        (response)=>{
-          // if(response === 1){
+    //   this.notesFetchSub=this.notesService.notesFetched.subscribe(
+    //     (response)=>{
+    //       // if(response === 1){
             this.fetchParams();       
-          // }
-          // if(response === 0){
-            // this.fetchParams();
-          // }
-        }
-      );      
+    //       // }
+    //       // if(response === 0){
+    //         // this.fetchParams();
+    //       // }
+    //     }
+    //   );
+    // this.notesStorage.  
   }
 
   fetchParams(){
     this.route.params.subscribe(
       (params : Params) => {
-        this.id = +params['id'];
+        this.id = params['id'];
         this.noteMode = params['mode'];
       }
     );
-    this.formInit(); 
+    if(this.noteMode === 'edit' && this.id !== ''){
+      this.getNote();
+    }
   }
 
   formInit(){
-    if(this.noteMode === 'edit' && this.id !== -1){
-      this.updateNote();
-    }
-    if(this.noteMode === 'create' && this.id === -1){
+    if(this.noteMode === 'create' && this.id === ''){
       this.note = {
         title : '',
         description : '',
@@ -79,9 +76,17 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
     this.successNotification = false;
   }
 
+  getNote(){
+    this.notesStorage.fetchNote(this.id).subscribe(data=>{
+      console.log('fetched individual note',data)
+      this.note = {...data.note};
+      this.updateNote();
+    })
+  }
+
   updateNote(){
     
-    this.note = this.notesService.notes[this.id];
+    // this.note = this.notesService.notes[this.id];
     this.noteForm  = new FormGroup({
       'title' : new FormControl(this.note.title,Validators.required),
       'description' : new FormControl(this.note.description,Validators.required),
@@ -116,7 +121,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
   }
 
   deleteNote(){
-    this.notesService.deleteNote(this.id);
+    this.notesService.deleteNote(this.note.id);
     this.noteForm.reset();
     this.successMessage = 'you have successfully deleted your note';
     this.successNotification = true;
@@ -126,6 +131,6 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(){
-    this.notesFetchSub.unsubscribe();
+    // this.notesFetchSub.unsubscribe();
   }
 }

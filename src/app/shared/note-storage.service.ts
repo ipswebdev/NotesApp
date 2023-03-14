@@ -37,14 +37,21 @@ export class NoteStorage{
     // //this.fetchUserId();
         const url = `${this.baseUrl}notes`;
         console.log('fetch notes',url)
-        return this.http.get<{notes:Notes[],message:string}>(url);
+        return this.http.get<{notes:any[],message:string}>(url);
     }
+    
+    fetchNote(id:string){
+        // //this.fetchUserId();
+            const url = `${this.baseUrl}notes/${id}`;
+            console.log('fetch notes',url)
+            return this.http.get<{note:any,message:string}>(url);
+    }
+
     update(note){
         // //this.fetchUserId();
-        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'/'+note.id+'.json';
-        console.log('this the url used',url);
-        console.log('this the note sent',note);
-        return this.http.patch<Notes>(url,note);
+        const url = `${this.baseUrl}notes/${note.id}`;
+        console.log('update',note);
+        return this.http.put<Notes>(url,note);
         
     }
     addNote(note : Notes){
@@ -55,7 +62,7 @@ export class NoteStorage{
     deleteNote(noteId:string){
         //this.fetchUserId();
         console.log('note id is',noteId);
-        const url = 'https://omdb-project-11edb.firebaseio.com/notes/'+this.userId+'/'+noteId+'.json';
+        const url = `${this.baseUrl}notes/${noteId}`;
         return this.http.delete(url);
     }
 }

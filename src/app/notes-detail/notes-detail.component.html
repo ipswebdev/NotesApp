@@ -1,7 +1,7 @@
 <div class="wrapper">
 <p *ngIf="successNotification">{{successMessage}}</p>
-<div class="card" *ngIf="noteForm">
-<form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+<div class="card" *ngIf="!isLoading">
+<form [formGroup]="noteForm" *ngIf="noteForm" (ngSubmit)="onSubmit()">
    <div>
     <textarea
     type="text"
@@ -25,9 +25,14 @@
     <button class="button" type="submit" *ngIf="noteMode === 'create'" [disabled] ="!noteForm.valid">Create New Note</button>
     <button class="button" type="submit" *ngIf="noteMode === 'edit'" [disabled] ="!noteForm.valid">Edit Note</button>
     </div>
-</form>    
-<button class="button button--delete" type="submit" *ngIf="noteMode === 'create'" [routerLink]="['/notes']">Back to all Notes</button>
+</form>
+<ng-container *ngIf="noteForm">
+    <button class="button button--delete" type="submit" *ngIf="noteMode === 'create'" [routerLink]="['/notes']">Back to all Notes</button>
     <button class="button button--delete" type="submit" *ngIf="noteMode === 'edit'" (click)="deleteNote()">Delete Note</button>
+</ng-container>
 </div>
-<div *ngIf="!noteForm"> <img src="/assets/icons/spinner.gif" alt=""></div>
+<ng-container *ngIf="!isLoading && !noteForm"> 
+    <div> No note found </div>
+</ng-container>
+<div *ngIf="isLoading"> <img src="/assets/icons/spinner.gif" alt=""></div>
 </div>

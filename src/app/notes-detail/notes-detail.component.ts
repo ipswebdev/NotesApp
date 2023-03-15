@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotesResolver } from '../shared/noteResolver.service';
 import { Subscription } from 'rxjs';
 import { NoteStorage } from '../shared/note-storage.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notes-detail',
@@ -19,6 +20,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
   id : any;
   isImp =false;
   noteForm : FormGroup;
+  isLoading: boolean = false;
   noteMode : string;
   successMessage : string;
   successNotification : boolean;
@@ -49,13 +51,11 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
         this.noteMode = params['mode'];
       }
     );
-    if(this.noteMode === 'edit' && this.id !== ''){
-      this.getNote();
-    }
+    this.formInit();
   }
 
   formInit(){
-    if(this.noteMode === 'create' && this.id === ''){
+    if(this.noteMode === 'create' && this.id === '-1'){
       this.note = {
         title : '',
         description : '',
@@ -63,11 +63,12 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
       }
       this.setNewNote(this.note);
     }
-   
+    if(this.noteMode === 'edit' && this.id !== ''){
+      this.getNote();
+    }
   }
 
   setNewNote(note){
-    
     this.noteForm  = new FormGroup({
       'title' : new FormControl(note.title,Validators.required),
       'description' : new FormControl(note.description,Validators.required),
@@ -77,10 +78,28 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
   }
 
   getNote(){
-    this.notesStorage.fetchNote(this.id).subscribe(data=>{
+    this.isLoading = true;
+    this.notesStorage.fetchNote(this.id)
+    .pipe(map(
+      res => {
+        return {
+          message:res.message,
+          note:{
+            id:res.note._id,
+            title:res.note.title,
+            description:res.note.description,
+            isImportant:res.note.isImportant
+          }
+        }
+      }
+    ))
+    .subscribe(data=>{
       console.log('fetched individual note',data)
       this.note = {...data.note};
+      this.isLoading = false;
       this.updateNote();
+    },err=>{
+      this.isLoading = false;
     })
   }
 

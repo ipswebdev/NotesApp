@@ -79,12 +79,12 @@ export class NotesService{
         
     }
 
-    onUpdateNote(id:number,note){
-        this.notes[id]=note;
-        this.noteChanged.next(true);
+    onUpdateNote(id:string,note){
+        console.log('patch',id,note);
         this.notesStorage.update(note).subscribe(
             (response) =>{
                 console.log('respponse of patch',response);
+                this.noteChanged.next(true);
             }
         );
     }

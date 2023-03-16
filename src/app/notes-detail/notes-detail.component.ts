@@ -72,14 +72,15 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
   newImgPicked(event:Event){
 
     let file = (event.target as HTMLInputElement).files[0];
-    this.noteForm.patchValue({img:file})
+    this.noteForm.patchValue({image:file})
     this.noteForm.get('image').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = ()=>{
-      this.imagePreview = reader.result as string; 
+      this.imagePreview = reader.result as string;
+      console.log('picked  file',this.imagePreview,this.noteForm) 
     }
     reader.readAsDataURL(file)
-    console.log('picked  file',this.imagePreview,this.noteForm)
+    
   }
 
   setNewNote(note){

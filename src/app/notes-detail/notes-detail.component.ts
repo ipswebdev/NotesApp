@@ -19,6 +19,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
   notesArr;
   id : any;
   isImp =false;
+  imagePreview: string;
   noteForm : FormGroup;
   isLoading: boolean = false;
   noteMode : string;
@@ -68,10 +69,24 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
     }
   }
 
+  newImgPicked(event:Event){
+
+    let file = (event.target as HTMLInputElement).files[0];
+    this.noteForm.patchValue({img:file})
+    this.noteForm.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      this.imagePreview = reader.result as string; 
+    }
+    reader.readAsDataURL(file)
+    console.log('picked  file',this.imagePreview,this.noteForm)
+  }
+
   setNewNote(note){
     this.noteForm  = new FormGroup({
       'title' : new FormControl(note.title,Validators.required),
       'description' : new FormControl(note.description,Validators.required),
+      'image' : new FormControl(note.img),
       'isImportant' : new FormControl(note.isImportant)
     });    
     this.successNotification = false;
@@ -109,6 +124,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
     this.noteForm  = new FormGroup({
       'title' : new FormControl(this.note.title,Validators.required),
       'description' : new FormControl(this.note.description,Validators.required),
+      'image' : new FormControl(null),
       'isImportant' : new FormControl(this.note.isImportant)
     });
     this.successNotification = false;

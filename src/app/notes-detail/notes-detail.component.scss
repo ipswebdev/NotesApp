@@ -5,6 +5,14 @@
     padding: 2rem 4rem;
     margin: 0 auto;
 }
+.imagePreview{
+    height: 100px;
+    width: 250px;
+    object-fit: contain;
+}
+input[type='file']{
+    visibility: hidden;
+}
 .card{
     display: flex;
     flex-direction: column;

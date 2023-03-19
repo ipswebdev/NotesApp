@@ -17,7 +17,7 @@
     <div>
         <button class="button" type="button" *ngIf="true || noteMode === 'create'" (click)="filePicker.click()">Add an Image</button>
         <input type="file" #filePicker (change)="newImgPicked($event)">
-        <img class="imagePreview" *ngIf="imagePreview" [src]="imagePreview" alt="">
+        <img class="imagePreview" *ngIf="imagePreview && noteForm.get('image').valid" [src]="imagePreview" alt="">
     </div>
     </div>
     <div class="imp-field">

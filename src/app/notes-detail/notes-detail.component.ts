@@ -3,11 +3,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Route, Router, Params, Data } from '@angular/router';
 import { Notes } from '../shared/note.model';
 import { NotesService } from '../shared/notes.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NG_ASYNC_VALIDATORS } from '@angular/forms';
 import { NotesResolver } from '../shared/noteResolver.service';
 import { Subscription } from 'rxjs';
 import { NoteStorage } from '../shared/note-storage.service';
 import { map } from 'rxjs/operators';
+import { imageValidator } from '../shared/image.validator';
 
 @Component({
   selector: 'app-notes-detail',
@@ -61,6 +62,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
         title : '',
         description : '',
         isImportant : false,
+        image: ''
       }
       this.setNewNote(this.note);
     }
@@ -87,7 +89,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
     this.noteForm  = new FormGroup({
       'title' : new FormControl(note.title,Validators.required),
       'description' : new FormControl(note.description,Validators.required),
-      'image' : new FormControl(note.img),
+      'image' : new FormControl(note.image,{asyncValidators:[imageValidator]}),
       'isImportant' : new FormControl(note.isImportant)
     });    
     this.successNotification = false;

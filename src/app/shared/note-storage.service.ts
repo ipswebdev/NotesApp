@@ -54,7 +54,7 @@ export class NoteStorage{
         return this.http.put<Notes>(url,note);
         
     }
-    addNote(note : Notes){
+    addNote(note : FormData){
         //this.fetchUserId();
         const url = `${this.baseUrl}notes`;
         return this.http.post(url,note);

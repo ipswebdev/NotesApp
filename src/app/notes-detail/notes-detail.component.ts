@@ -62,7 +62,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
         title : '',
         description : '',
         isImportant : false,
-        image: ''
+        imagePath: ''
       }
       this.setNewNote(this.note);
     }
@@ -106,6 +106,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
             id:res.note._id,
             title:res.note.title,
             description:res.note.description,
+            imagePath: (res && res.note && res.note.imagePath ) || '',
             isImportant:res.note.isImportant
           }
         }
@@ -127,7 +128,7 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
     this.noteForm  = new FormGroup({
       'title' : new FormControl(this.note.title,Validators.required),
       'description' : new FormControl(this.note.description,Validators.required),
-      'image' : new FormControl(null),
+      'image' : new FormControl(this.note.imagePath),
       'isImportant' : new FormControl(this.note.isImportant)
     });
     this.successNotification = false;
@@ -146,13 +147,19 @@ export class NotesDetailComponent implements OnInit,OnDestroy {
       this.note.title = this.noteForm.value.title; 
       this.note.description = this.noteForm.value.description;
       this.note.isImportant = this.noteForm.value.isImportant;
-      console.log(this.note);
-      this.notesService.addNewNote(this.note);
+      let formData = new FormData();
+      formData.append('title',this.note.title);
+      formData.append('description',this.note.description);
+      formData.append('image',this.noteForm.get('image').value,this.note.title);
+      formData.append('isImportant',''+this.note.isImportant);
+      console.log(this.note,this.noteForm.get('image').value,formData);
+      
+      this.notesService.addNewNote(formData);
       this.successMessage = 'you have successfully created an new note';
-      this.noteForm.reset();
-      setTimeout(()=>{
-        this.router.navigate(['/notes']);
-      },2500)
+      // this.noteForm.reset();
+      // setTimeout(()=>{
+      //   this.router.navigate(['/notes']);
+      // },2500)
     }
     // this.noteForm.reset();
     this.successNotification = true;

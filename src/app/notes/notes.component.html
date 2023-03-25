@@ -20,6 +20,7 @@
             <div class="heading">  
                 {{note.title}}            
             </div>
+            <img class="imagePreview" *ngIf="note.imagePath" [src]="note.imagePath" [alt]="note.title">
             <div class="body">
                 {{note.description}}
             </div> 

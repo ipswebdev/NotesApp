@@ -7,7 +7,6 @@ export const imageValidator = (control:AbstractControl) : Promise<{[key:string]:
     }
     const fileReader = new FileReader();
     const file = control.value as File;
-    console.log(control)
     const fileReaderObs = new Observable((observer : Observer<{[key:string]:any}>) =>{
         fileReader.addEventListener('loadend',()=>{
             const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0,4);

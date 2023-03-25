@@ -28,9 +28,10 @@ export class NotesService{
         .pipe(map(res=>{
             return {notes:res.notes.map(note =>{
                 return {
-                    id:note._id,
-                    title:note.title,
-                    description:note.description
+                    id: note._id,
+                    title: note.title,
+                    description: note.description,
+                    imagePath: note.imagePath
                 }
             }),
             message: res.message
@@ -56,7 +57,7 @@ export class NotesService{
     getSingleNote(index): Notes{
         return this.notes[index];
     }
-    addNewNote(noteReceived : Notes){
+    addNewNote(noteReceived : FormData){
         this.notesStorage.addNote(noteReceived)
         // .pipe(map(
         //     (response) => {
